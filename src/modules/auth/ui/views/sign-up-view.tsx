@@ -21,55 +21,59 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaGithub, FaGoogle } from 'react-icons/fa';
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
-const formSchema = z.object({
-	name: z.string().min(1, 'Mail is required'),
-	email: z.string().email(),
-	password: z.string().min(1, "Password is required"),
-	confirmPassword: z.string().min(1, "Password is required"),
-}).refine(data => data.password === data.confirmPassword, {
-	message: "Passwords don't match",
-	path: ['confirmPassword']
-});
+const formSchema = z
+	.object({
+		name: z.string().min(1, "Mail is required"),
+		email: z.string().email(),
+		password: z.string().min(1, "Password is required"),
+		confirmPassword: z.string().min(1, "Password is required"),
+	})
+	.refine((data) => data.password === data.confirmPassword, {
+		message: "Passwords don't match",
+		path: ["confirmPassword"],
+	});
 
 export const SignUpView = () => {
-	const router = useRouter()
-	const [error, setError] = useState<null | string>('')
-	const [pending, setPending] = useState(false)
+	const router = useRouter();
+	const [error, setError] = useState<null | string>("");
+	const [pending, setPending] = useState(false);
 
 	const form = useForm({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			name: '',
+			name: "",
 			email: "",
 			password: "",
-			confirmPassword: '',
+			confirmPassword: "",
 		},
 	});
 
 	const onSubmit = (data: z.infer<typeof formSchema>) => {
-		setError(null)
+		setError(null);
 
-		authClient.signUp.email({
-			name: data.name,
-			email: data.email,
-			password: data.password,
-			callbackURL: '/'
-		}, {
-			onRequest: () => {
-				setPending(true)
+		authClient.signUp.email(
+			{
+				name: data.name,
+				email: data.email,
+				password: data.password,
+				callbackURL: "/",
 			},
-			onSuccess: () => {
-				router.push('/')
+			{
+				onRequest: () => {
+					setPending(true);
+				},
+				onSuccess: () => {
+					router.push("/");
+				},
+				onError: ({ error }) => {
+					setError(error.message);
+					setPending(false);
+				},
 			},
-			onError: ({ error }) => {
-				setError(error.message)
-				setPending(false)
-			}
-		})
-	}
-
+		);
+	};
 
 	const onSocial = (provider: "github" | "google") => {
 		setError(null);
@@ -77,7 +81,7 @@ export const SignUpView = () => {
 		authClient.signIn.social(
 			{
 				provider,
-				callbackURL: '/'
+				callbackURL: "/",
 			},
 			{
 				onRequest: () => {
@@ -174,13 +178,17 @@ export const SignUpView = () => {
 										)}
 									/>
 								</div>
-								{!!error && <Alert className="bg-destructive/10 border-none">
-									<OctagonAlertIcon className="size-4 !text-destructive" />
-									<AlertTitle>{error}</AlertTitle>
-								</Alert>}
-								<Button disabled={pending} className="w-full" type='submit'>Sign Up</Button>
+								{!!error && (
+									<Alert className="bg-destructive/10 border-none">
+										<OctagonAlertIcon className="size-4 !text-destructive" />
+										<AlertTitle>{error}</AlertTitle>
+									</Alert>
+								)}
+								<Button disabled={pending} className="w-full" type="submit">
+									Sign Up
+								</Button>
 								<div className="after-border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-									<span className='bg-card text-muted-foreground relative z-10 px-2'>
+									<span className="bg-card text-muted-foreground relative z-10 px-2">
 										Or continue with
 									</span>
 								</div>
@@ -206,11 +214,19 @@ export const SignUpView = () => {
 										Github
 									</Button>
 								</div>
-								<div className="text-center text-sm">Already have an account <Link href='/sign-in' className="underline underline-offset-4">Sign in</Link></div>
+								<div className="text-center text-sm">
+									Already have an account{" "}
+									<Link
+										href="/sign-in"
+										className="underline underline-offset-4"
+									>
+										Sign in
+									</Link>
+								</div>
 							</div>
 						</form>
 					</Form>
-					<div className="bg-radial from-green-500 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
+					<div className="bg-radial from-sidebar-accent to-sidebar relative hidden md:flex flex-col gap-y-4 items-center justify-center">
 						<img
 							src="/logo.svg"
 							alt="Companion AI Logo"
@@ -221,7 +237,9 @@ export const SignUpView = () => {
 				</CardContent>
 			</Card>
 			<div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-				By clicking continue, tou agree to our <Link href='/terms-of-service'>Terms of Service</Link> and <Link href='/private-policy'>Privacy Policy</Link>
+				By clicking continue, tou agree to our{" "}
+				<Link href="/terms-of-service">Terms of Service</Link> and{" "}
+				<Link href="/private-policy">Privacy Policy</Link>
 			</div>
 		</div>
 	);
