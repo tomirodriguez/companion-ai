@@ -6,7 +6,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint",
+		"lint": "biome check --write .",
 		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio"
 	},
@@ -61,6 +61,7 @@
 		"nanoid": "^5.1.5",
 		"next": "15.3.2",
 		"next-themes": "^0.4.6",
+		"nuqs": "^2.4.3",
 		"react": "^19.0.0",
 		"react-day-picker": "8.10.1",
 		"react-dom": "^19.0.0",
@@ -76,6 +77,7 @@
 		"zod": "^3.25.33"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
 		"@eslint/eslintrc": "^3",
 		"@tailwindcss/postcss": "^4",
 		"@types/lodash.debounce": "^4.0.9",
