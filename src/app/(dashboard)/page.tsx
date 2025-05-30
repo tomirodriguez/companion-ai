@@ -1,17 +1,8 @@
-import { auth } from "@/lib/auth";
+import { authenticationCheck } from "@/lib/authentication-check";
 import { HomeView } from "@/modules/home/ui/views/home-view";
-import { caller } from "@/trpc/server";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
 export default async function Home() {
-	const session = await auth.api.getSession({
-		headers: await headers(),
-	});
-
-	if (!session) {
-		redirect("/sign-in");
-	}
+	await authenticationCheck();
 
 	return <HomeView />;
 }

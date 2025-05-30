@@ -22,8 +22,8 @@ export default function RootLayout({
 		<TRPCReactProvider>
 			<html lang="en">
 				<body className={`${inter.className} antialiased`}>
-					{children}
 					<Toaster position="top-right" richColors />
+					{children}
 				</body>
 			</html>
 		</TRPCReactProvider>
