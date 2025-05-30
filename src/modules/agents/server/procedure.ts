@@ -16,7 +16,7 @@ export const agentsRouter = createTRPCRouter({
 			.from(agents)
 			.where(eq(agents.userId, ctx.auth.user.id));
 
-		return data;
+		return data.map((agent) => ({ ...agent, meetingCount: 5 }));
 	}),
 	getOne: protectedProcedure
 		.input(z.object({ id: z.string() }))
@@ -29,7 +29,7 @@ export const agentsRouter = createTRPCRouter({
 				)
 				.limit(1);
 
-			return existingAgent;
+			return { ...existingAgent, meetingCount: 5 };
 		}),
 	create: protectedProcedure
 		.input(agentsInsertSchema)
