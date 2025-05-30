@@ -1,5 +1,5 @@
-import { ErrorState } from "@/components/error-state";
-import { LoadingState } from "@/components/loading-state";
+import { authenticationCheck } from "@/lib/authentication-check";
+import { AgentsListHeader } from "@/modules/agents/ui/components/agents-list-header";
 import {
 	AgentsView,
 	AgentsViewError,
@@ -11,17 +11,22 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 export default async function Page() {
+	await authenticationCheck();
+
 	const queryClient = getQueryClient();
 
 	void queryClient.prefetchQuery(trpc.agents.getMany.queryOptions());
 
 	return (
-		<HydrationBoundary state={dehydrate(queryClient)}>
-			<Suspense fallback={<AgentsViewLoading />}>
-				<ErrorBoundary FallbackComponent={AgentsViewError}>
-					<AgentsView />
-				</ErrorBoundary>
-			</Suspense>
-		</HydrationBoundary>
+		<>
+			<AgentsListHeader />
+			<HydrationBoundary state={dehydrate(queryClient)}>
+				<Suspense fallback={<AgentsViewLoading />}>
+					<ErrorBoundary FallbackComponent={AgentsViewError}>
+						<AgentsView />
+					</ErrorBoundary>
+				</Suspense>
+			</HydrationBoundary>
+		</>
 	);
 }
