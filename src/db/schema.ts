@@ -136,6 +136,7 @@ export const meetings = pgTable(
 		updatedAt: timestamp("updated_at").notNull().defaultNow(),
 	},
 	(meeting) => [
-		index("meeting_user_id_agent_id_idx").on(meeting.userId, meeting.agentId),
+		index("meeting_user_id_idx").on(meeting.userId),
+		index("meeting_agent_id_idx").on(meeting.agentId),
 	],
 );
