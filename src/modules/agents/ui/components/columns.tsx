@@ -4,9 +4,9 @@ import { GeneratedAvatar } from "@/components/generated-avatar";
 import { Badge } from "@/components/ui/badge";
 import type { ColumnDef } from "@tanstack/react-table";
 import { CornerDownRightIcon, VideoIcon } from "lucide-react";
-import type { AgentGetOne } from "../../types";
+import type { AgentGetMany } from "../../types";
 
-export const columns: ColumnDef<AgentGetOne>[] = [
+export const columns: ColumnDef<AgentGetMany[number]>[] = [
 	{
 		accessorKey: "name",
 		header: "Name",
