@@ -11,6 +11,7 @@ import {
 	createTRPCRouter,
 	protectedProcedure,
 } from "@/trpc/init";
+import { TRPCError } from "@trpc/server";
 import { and, count, desc, eq, ilike } from "drizzle-orm";
 import { z } from "zod";
 import { agentsInsertSchema } from "../schemas";
@@ -74,9 +75,13 @@ export const agentsRouter = createTRPCRouter({
 				.select()
 				.from(agents)
 				.where(
-					and(eq(agents.id, input.id), eq(agents.userId, ctx.auth.user.id)),
+					and(eq(agents.userId, ctx.auth.user.id), eq(agents.id, input.id)),
 				)
 				.limit(1);
+
+			if (!existingAgent) {
+				throw new TRPCError({ code: "NOT_FOUND", message: "Agent not found" });
+			}
 
 			return { ...existingAgent, meetingCount: 5 };
 		}),
