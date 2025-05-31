@@ -153,7 +153,6 @@ export const MeetingForm: React.FC<MeetingFormProps> = ({
 												</div>
 											),
 										}))}
-										onClose={() => setAgentSearch("")}
 										onSelect={field.onChange}
 										onSearch={handleAgentSearch}
 										value={field.value}

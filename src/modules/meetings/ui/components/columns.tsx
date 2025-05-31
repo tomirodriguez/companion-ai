@@ -17,6 +17,7 @@ import {
 	VideoIcon,
 } from "lucide-react";
 import type { MeetingGetMany } from "../../types";
+import { statusIconMap } from "../utils";
 
 function formatDuration(seconds: number) {
 	return humanizeDuration(seconds * 1000, {
@@ -25,14 +26,6 @@ function formatDuration(seconds: number) {
 		units: ["h", "m", "s"],
 	});
 }
-
-const statusIconMap: Record<MeetingGetMany[number]["status"], LucideIcon> = {
-	upcoming: ClockArrowUpIcon,
-	active: LoaderIcon,
-	complete: CircleCheckIcon,
-	processing: LoaderIcon,
-	cancelled: CircleXIcon,
-};
 
 const statusColorMap: Record<MeetingGetMany[number]["status"], string> = {
 	upcoming: "bg-yellow-500/20 text-yellow-800 border-yellow-800/5",
@@ -103,7 +96,6 @@ export const columns: ColumnDef<MeetingGetMany[number]>[] = [
 					variant="outline"
 					className={cn(
 						"capitalize [&>svg]:size-4 text-muted-foreground flex items-center gap-x-2",
-						statusColorMap[row.original.status],
 					)}
 				>
 					<ClockFadingIcon className="text-blue-700" />

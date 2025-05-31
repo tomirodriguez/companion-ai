@@ -10,29 +10,31 @@ import {
 	CommandResponsiveDialog,
 } from "./ui/command";
 
-type CommandSelectProps = {
-	options: Array<{ id: string; value: string; children: React.ReactNode }>;
-	onSelect: (value: string) => void;
+type CommandSelectProps<T> = {
+	options: Array<{ id: string; value: T; children: React.ReactNode }>;
+	onSelect: (value: T) => void;
 	onSearch?: (value: string) => void;
-	value: string;
+	value: T | null;
 	placeholder?: string;
 	isSearchable?: boolean;
 	className?: string;
-	onClose?: () => void;
 };
 
-export const CommandSelect: React.FC<CommandSelectProps> = ({
+export const CommandSelect = <T,>({
 	options,
 	value,
 	placeholder,
-	isSearchable,
 	className,
 	onSelect,
 	onSearch,
-	onClose,
-}) => {
+}: CommandSelectProps<T>) => {
 	const [open, setOpen] = useState(false);
 	const selectedOption = options.find((option) => option.value === value);
+
+	const handleOpenChange = (value: boolean) => {
+		onSearch?.("");
+		setOpen(value);
+	};
 
 	return (
 		<>
@@ -51,10 +53,7 @@ export const CommandSelect: React.FC<CommandSelectProps> = ({
 			</Button>
 			<CommandResponsiveDialog
 				open={open}
-				onOpenChange={(open) => {
-					setOpen(open);
-					onClose?.();
-				}}
+				onOpenChange={handleOpenChange}
 				shouldFilter={!onSearch}
 			>
 				<CommandInput placeholder="Search..." onValueChange={onSearch} />

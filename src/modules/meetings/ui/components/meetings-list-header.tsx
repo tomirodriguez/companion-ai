@@ -1,22 +1,30 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { DEFAULT_PAGE } from "@/constants";
 import { PlusIcon, XCircleIcon } from "lucide-react";
 import { useState } from "react";
+import { useMeetingsFilters } from "../../hooks/use-meetings-filters";
+import { MeetingsAgentFilter } from "./meetings-agent-filter";
+import { MeetingsSearchFilter } from "./meetings-search-filter";
+import { MeetingsStatusFilter } from "./meetings-status-filter";
 import { NewMeetingDialog } from "./new-meeting-dialog";
 
 export const MeetingsListHeader = () => {
-	// const [filters, setFilters] = useAgentsFilters();
+	const [filters, setFilters] = useMeetingsFilters();
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-	// const isAnyFilterModified = !!filters.search;
-	const isAnyFilterModified = false;
+	const isAnyFilterModified =
+		!!filters.status || !!filters.search || !!filters.agentId;
 
 	const onClearFilters = () => {
-		// setFilters({
-		// 	search: "",
-		// 	page: DEFAULT_PAGE,
-		// });
+		setFilters({
+			search: "",
+			agentId: "",
+			status: null,
+			page: DEFAULT_PAGE,
+		});
 	};
 
 	return (
@@ -30,15 +38,20 @@ export const MeetingsListHeader = () => {
 						New Meeting
 					</Button>
 				</div>
-				<div className="flex items-center gap-x-2 p-1">
-					{/* <AgentsSearchFilter /> */}
-					{isAnyFilterModified && (
-						<Button variant="outline" size="sm" onClick={onClearFilters}>
-							<XCircleIcon />
-							Clear
-						</Button>
-					)}
-				</div>
+				<ScrollArea>
+					<div className="flex items-center gap-x-2 p-1">
+						<MeetingsSearchFilter />
+						<MeetingsStatusFilter />
+						<MeetingsAgentFilter />
+						{isAnyFilterModified && (
+							<Button variant="outline" size="sm" onClick={onClearFilters}>
+								<XCircleIcon />
+								Clear
+							</Button>
+						)}
+					</div>
+					<ScrollBar orientation="horizontal" />
+				</ScrollArea>
 			</div>
 		</>
 	);

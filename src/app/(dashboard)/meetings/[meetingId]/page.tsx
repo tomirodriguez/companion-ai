@@ -15,5 +15,5 @@ export default async function Page({ searchParams }: Props) {
 	const queryClient = getQueryClient();
 
 	void queryClient.prefetchQuery(trpc.agents.getMany.queryOptions(params));
-	return <div>asd</div>;
+	return <div>Meeting ID page</div>;
 }
