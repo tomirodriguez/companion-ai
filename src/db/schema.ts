@@ -1,3 +1,4 @@
+import { meetingStatusValues } from "@/modules/meetings/constants";
 import {
 	boolean,
 	index,
@@ -105,13 +106,7 @@ export const agents = pgTable(
 	(agent) => [index("agent_user_id_idx").on(agent.userId)],
 );
 
-export const meetingStatus = pgEnum("meeting_status", [
-	"upcoming",
-	"active",
-	"complete",
-	"processing",
-	"cancelled",
-]);
+export const meetingStatus = pgEnum("meeting_status", meetingStatusValues);
 
 export const meetings = pgTable(
 	"meetings",
