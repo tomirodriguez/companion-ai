@@ -2,7 +2,6 @@ import { DEFAULT_PAGE } from "@/constants";
 import {
 	parseAsInteger,
 	parseAsString,
-	parseAsStringEnum,
 	parseAsStringLiteral,
 	useQueryStates,
 } from "nuqs";

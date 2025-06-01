@@ -1,5 +1,4 @@
 import { authenticationCheck } from "@/lib/authentication-check";
-import { loadSearchParams } from "@/modules/agents/params";
 import { loadMeetingsSearchParams } from "@/modules/meetings/params";
 import { MeetingsListHeader } from "@/modules/meetings/ui/components/meetings-list-header";
 import {

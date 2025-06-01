@@ -22,14 +22,12 @@ import {
 import Link from "next/link";
 
 type AgentIdHeaderProps = {
-	agentId: string;
 	agentName: string;
 	onEdit: () => void;
 	onRemove: () => void;
 };
 
 export const AgentIdHeader: React.FC<AgentIdHeaderProps> = ({
-	agentId,
 	agentName,
 	onEdit,
 	onRemove,
