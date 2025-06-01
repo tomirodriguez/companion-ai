@@ -1,9 +1,7 @@
 "use client";
 
 import { ErrorState } from "@/components/error-state";
-import { GeneratedAvatar } from "@/components/generated-avatar";
 import { LoadingState } from "@/components/loading-state";
-import { Badge } from "@/components/ui/badge";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useTRPC } from "@/trpc/client";
 import {
@@ -11,11 +9,14 @@ import {
 	useQueryClient,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
-import { VideoIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { MeetingIdHeader } from "../components/meeting-id-header";
+import { ActiveState } from "../components/states/active-state";
+import { CancelledState } from "../components/states/cancel-state";
+import { ProcessingState } from "../components/states/processing-state";
+import { UpcomingState } from "../components/states/upcoming-state";
 import { UpdateMeetingDialog } from "../components/update-meeting-dialog";
 
 type MeetingIdViewProps = {
@@ -72,30 +73,17 @@ export const MeetingIdView: React.FC<MeetingIdViewProps> = ({ meetingId }) => {
 					onEdit={() => setUpdateMeetingDialogOpen(true)}
 					onRemove={handleRemoveMeeting}
 				/>
-				<div className="bg-white rounded-lg border">
-					<div className="px-4 py-5 gap-y-5 flex flex-col cal-span-5">
-						<div className="flex items-center gap-x-3">
-							<GeneratedAvatar
-								variant="botttsNeutral"
-								seed={data.name}
-								className="size-10"
-							/>
-							<h2 className="text-2xl font-medium">{data.name}</h2>
-						</div>
-						<Badge
-							variant="outline"
-							className="flex items-center gap-x-2 [&>svg]:size-4"
-						>
-							<VideoIcon className="text-primary" />
-							{/* {data.meetingCount}{" "}
-							{data.meetingCount === 1 ? "meeting" : "meetings"} */}
-						</Badge>
-						<div className="flex flex-col gap-y-4">
-							<p className="text-lg font-medium">Instructions</p>
-							{/* <p className="text-neutral-800">{data.instructions}</p> */}
-						</div>
-					</div>
-				</div>
+				{data.status === "active" && <ActiveState meetingId={meetingId} />}
+				{data.status === "cancelled" && <CancelledState />}
+				{data.status === "complete" && <div>Complete</div>}
+				{data.status === "processing" && <ProcessingState />}
+				{data.status === "upcoming" && (
+					<UpcomingState
+						meetingId={meetingId}
+						onCancelMeeting={() => {}}
+						isCancelling={false}
+					/>
+				)}
 			</div>
 		</>
 	);
