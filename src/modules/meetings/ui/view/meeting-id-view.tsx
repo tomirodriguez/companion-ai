@@ -15,29 +15,31 @@ import { VideoIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { AgentIdHeader } from "../components/agent-id-header";
-import { UpdateAgentDialog } from "../components/update-agent-dialog";
+import { MeetingIdHeader } from "../components/meeting-id-header";
+import { UpdateMeetingDialog } from "../components/update-meeting-dialog";
 
-type AgentIdViewProps = {
-	agentId: string;
+type MeetingIdViewProps = {
+	meetingId: string;
 };
 
-export const AgentIdView: React.FC<AgentIdViewProps> = ({ agentId }) => {
+export const MeetingIdView: React.FC<MeetingIdViewProps> = ({ meetingId }) => {
 	const trpc = useTRPC();
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const [ConfirmDialog, confirm] = useConfirm();
-	const [updateAgentDialogOpen, setUpdateAgentDialogOpen] = useState(false);
+	const [updateMeetingDialogOpen, setUpdateMeetingDialogOpen] = useState(false);
 
 	const { data } = useSuspenseQuery(
-		trpc.agents.getOne.queryOptions({ id: agentId }),
+		trpc.meetings.getOne.queryOptions({ id: meetingId }),
 	);
 
-	const removeAgent = useMutation(
-		trpc.agents.remove.mutationOptions({
+	const removeMeeting = useMutation(
+		trpc.meetings.remove.mutationOptions({
 			onSuccess: async () => {
-				await queryClient.invalidateQueries(trpc.agents.getMany.queryOptions());
-				router.push("/agents");
+				await queryClient.invalidateQueries(
+					trpc.meetings.getMany.queryOptions(),
+				);
+				router.push("/meetings");
 			},
 			onError: (error) => {
 				toast.error(error.message);
@@ -45,30 +47,30 @@ export const AgentIdView: React.FC<AgentIdViewProps> = ({ agentId }) => {
 		}),
 	);
 
-	const handleRemoveAgent = async () => {
+	const handleRemoveMeeting = async () => {
 		const confirmed = await confirm({
 			title: "Are you sure?",
-			description: `The following action will remove ${data.meetingCount} associated meetings`,
+			description: "The following action will remove this meeting.",
 		});
 
 		if (!confirmed) return;
 
-		await removeAgent.mutateAsync({ id: agentId });
+		await removeMeeting.mutateAsync({ id: meetingId });
 	};
 
 	return (
 		<>
 			<ConfirmDialog />
-			<UpdateAgentDialog
-				open={updateAgentDialogOpen}
-				onOpenChange={setUpdateAgentDialogOpen}
+			<UpdateMeetingDialog
+				open={updateMeetingDialogOpen}
+				onOpenChange={setUpdateMeetingDialogOpen}
 				initialValues={data}
 			/>
 			<div className="flex-1 py-4 px-4 md:px-8 flex flex-col gap-y-4">
-				<AgentIdHeader
-					agentName={data.name}
-					onEdit={() => setUpdateAgentDialogOpen(true)}
-					onRemove={handleRemoveAgent}
+				<MeetingIdHeader
+					meetingName={data.name}
+					onEdit={() => setUpdateMeetingDialogOpen(true)}
+					onRemove={handleRemoveMeeting}
 				/>
 				<div className="bg-white rounded-lg border">
 					<div className="px-4 py-5 gap-y-5 flex flex-col cal-span-5">
@@ -85,12 +87,12 @@ export const AgentIdView: React.FC<AgentIdViewProps> = ({ agentId }) => {
 							className="flex items-center gap-x-2 [&>svg]:size-4"
 						>
 							<VideoIcon className="text-primary" />
-							{data.meetingCount}{" "}
-							{data.meetingCount === 1 ? "meeting" : "meetings"}
+							{/* {data.meetingCount}{" "}
+							{data.meetingCount === 1 ? "meeting" : "meetings"} */}
 						</Badge>
 						<div className="flex flex-col gap-y-4">
 							<p className="text-lg font-medium">Instructions</p>
-							<p className="text-neutral-800">{data.instructions}</p>
+							{/* <p className="text-neutral-800">{data.instructions}</p> */}
 						</div>
 					</div>
 				</div>
@@ -99,19 +101,19 @@ export const AgentIdView: React.FC<AgentIdViewProps> = ({ agentId }) => {
 	);
 };
 
-export const AgentsIdViewLoading = () => {
+export const MeetingIdViewLoading = () => {
 	return (
 		<LoadingState
-			title="Loading Agent"
+			title="Loading Meeting"
 			description="This may take a few seconds"
 		/>
 	);
 };
 
-export const AgentsIdViewError = () => {
+export const MeetingIdViewError = () => {
 	return (
 		<ErrorState
-			title="Failed loading Agent"
+			title="Failed loading Meeting"
 			description="Please try again later"
 		/>
 	);

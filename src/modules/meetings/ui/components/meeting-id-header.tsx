@@ -21,14 +21,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-type AgentIdHeaderProps = {
-	agentName: string;
+type MeetingIdHeaderProps = {
+	meetingName: string;
 	onEdit: () => void;
 	onRemove: () => void;
 };
 
-export const AgentIdHeader: React.FC<AgentIdHeaderProps> = ({
-	agentName,
+export const MeetingIdHeader: React.FC<MeetingIdHeaderProps> = ({
+	meetingName,
 	onEdit,
 	onRemove,
 }) => {
@@ -38,7 +38,7 @@ export const AgentIdHeader: React.FC<AgentIdHeaderProps> = ({
 				<BreadcrumbList>
 					<BreadcrumbItem>
 						<BreadcrumbLink asChild className="font-medium text-xl">
-							<Link href={"/agents"}>My Agents</Link>
+							<Link href={"/meetings"}>My Meetings</Link>
 						</BreadcrumbLink>
 					</BreadcrumbItem>
 					<BreadcrumbSeparator className="text-foreground text-xl font-medium [&>svg]:size-4">
@@ -46,7 +46,7 @@ export const AgentIdHeader: React.FC<AgentIdHeaderProps> = ({
 					</BreadcrumbSeparator>
 					<BreadcrumbItem>
 						<BreadcrumbPage className="font-medium text-xl">
-							{agentName}
+							{meetingName}
 						</BreadcrumbPage>
 					</BreadcrumbItem>
 				</BreadcrumbList>

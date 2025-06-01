@@ -1,5 +1,5 @@
 import { ResponsiveAlertDialog } from "@/components/responsive-alert-dialog";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { type JSX, useState } from "react";
 
 type DialogProps = {

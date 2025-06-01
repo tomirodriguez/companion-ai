@@ -6,16 +6,7 @@ import { cn } from "@/lib/utils";
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns/format";
 import humanizeDuration from "humanize-duration";
-import {
-	CircleCheckIcon,
-	CircleXIcon,
-	ClockArrowUpIcon,
-	ClockFadingIcon,
-	CornerDownRightIcon,
-	LoaderIcon,
-	type LucideIcon,
-	VideoIcon,
-} from "lucide-react";
+import { ClockFadingIcon, CornerDownRightIcon } from "lucide-react";
 import type { MeetingGetMany } from "../../types";
 import { statusIconMap } from "../utils";
 
