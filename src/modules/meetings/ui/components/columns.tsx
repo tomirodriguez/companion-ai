@@ -2,21 +2,12 @@
 
 import { GeneratedAvatar } from "@/components/generated-avatar";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn, formatDuration } from "@/lib/utils";
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns/format";
-import humanizeDuration from "humanize-duration";
 import { ClockFadingIcon, CornerDownRightIcon } from "lucide-react";
 import type { MeetingGetMany } from "../../types";
 import { statusIconMap } from "../utils";
-
-function formatDuration(seconds: number) {
-	return humanizeDuration(seconds * 1000, {
-		largest: 1,
-		round: true,
-		units: ["h", "m", "s"],
-	});
-}
 
 const statusColorMap: Record<MeetingGetMany[number]["status"], string> = {
 	upcoming: "bg-yellow-500/20 text-yellow-800 border-yellow-800/5",

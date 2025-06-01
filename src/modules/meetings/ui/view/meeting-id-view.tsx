@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { MeetingIdHeader } from "../components/meeting-id-header";
 import { ActiveState } from "../components/states/active-state";
 import { CancelledState } from "../components/states/cancel-state";
+import { CompletedState } from "../components/states/completed-state";
 import { ProcessingState } from "../components/states/processing-state";
 import { UpcomingState } from "../components/states/upcoming-state";
 import { UpdateMeetingDialog } from "../components/update-meeting-dialog";
@@ -75,7 +76,7 @@ export const MeetingIdView: React.FC<MeetingIdViewProps> = ({ meetingId }) => {
 				/>
 				{data.status === "active" && <ActiveState meetingId={meetingId} />}
 				{data.status === "cancelled" && <CancelledState />}
-				{data.status === "complete" && <div>Complete</div>}
+				{data.status === "complete" && <CompletedState data={data} />}
 				{data.status === "processing" && <ProcessingState />}
 				{data.status === "upcoming" && (
 					<UpcomingState
