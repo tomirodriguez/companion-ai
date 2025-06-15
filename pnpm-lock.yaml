@@ -23,6 +23,12 @@ importers:
       '@neondatabase/serverless':
         specifier: ^1.0.0
         version: 1.0.0
+      '@polar-sh/better-auth':
+        specifier: ^1.0.1
+        version: 1.0.1(@polar-sh/sdk@0.33.1(zod@3.25.33))(better-auth@1.2.8)
+      '@polar-sh/sdk':
+        specifier: ^0.33.1
+        version: 0.33.1(zod@3.25.33)
       '@radix-ui/react-accordion':
         specifier: ^1.2.11
         version: 1.2.11(@types/react-dom@19.1.5(@types/react@19.1.6))(@types/react@19.1.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1656,6 +1662,23 @@ packages:
   '@peculiar/asn1-x509@2.3.15':
     resolution: {integrity: sha512-0dK5xqTqSLaxv1FHXIcd4Q/BZNuopg+u1l23hT9rOmQ1g4dNtw0g/RnEi+TboB0gOwGtrWn269v27cMgchFIIg==}
 
+  '@polar-sh/better-auth@1.0.1':
+    resolution: {integrity: sha512-2wT/zaBqy6LsCkEEBLDzKF4QT8kE5iwFqZAo4RSkB+AtUn4VEZwUwfjQdxUvEfJ535yIIg8eFEWhG8DvdZZVOQ==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      '@polar-sh/sdk': ^0.32.15
+      better-auth: ^1.2.7
+
+  '@polar-sh/sdk@0.33.1':
+    resolution: {integrity: sha512-DfnNtbL2+74RmCeZx3SpVu2XWanzSbZlpcUgdnQ38iSWkITI181t1DlvWWFYC2+VTaR2/xFcC4lOFjxLv20vvg==}
+    hasBin: true
+    peerDependencies:
+      '@modelcontextprotocol/sdk': '>=1.5.0 <1.10.0'
+      zod: '>= 3'
+    peerDependenciesMeta:
+      '@modelcontextprotocol/sdk':
+        optional: true
+
   '@protobuf-ts/runtime-rpc@2.11.0':
     resolution: {integrity: sha512-g/oMPym5LjVyCc3nlQc6cHer0R3CyleBos4p7CjRNzdKuH/FlRXzfQYo6EN5uv8vLtn7zEK9Cy4YBKvHStIaag==}
 
@@ -2319,6 +2342,9 @@ packages:
   '@simplewebauthn/server@13.1.1':
     resolution: {integrity: sha512-1hsLpRHfSuMB9ee2aAdh0Htza/X3f4djhYISrggqGe3xopNjOcePiSDkDDoPzDYaaMCrbqGP1H2TYU7bgL9PmA==}
     engines: {node: '>=20.0.0'}
+
+  '@stablelib/base64@1.0.1':
+    resolution: {integrity: sha512-1bnPQqSxSuc3Ii6MhBysoWCg58j97aUjuCSZrGSmDxNqtytIi0k8utUenAwTZN4V5mXXYGsVUI9zeBqy+jBOSQ==}
 
   '@standard-schema/utils@0.3.0':
     resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
@@ -3565,6 +3591,9 @@ packages:
 
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
+
+  fast-sha256@1.3.0:
+    resolution: {integrity: sha512-n11RGP/lrWEFI/bWdygLxhI+pVeo1ZYIVwvvPkW7azl/rOy+F3HYRZ2K5zeE9mmkhQppyv9sQFx0JM9UabnpPQ==}
 
   fastq@1.19.1:
     resolution: {integrity: sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==}
@@ -4997,6 +5026,9 @@ packages:
 
   stable-hash@0.0.5:
     resolution: {integrity: sha512-+L3ccpzibovGXFK+Ap/f8LOS0ahMrHTf3xu7mMLSpEGU0EO9ucaysSylKo9eRDFNhWve/y275iPmIZ4z39a9iA==}
+
+  standardwebhooks@1.0.0:
+    resolution: {integrity: sha512-BbHGOQK9olHPMvQNHWul6MYlrRTAOKn03rOe4A8O3CLWhNf4YHBqq2HJKKC+sfqpxiBY52pNeesD6jIiLDz8jg==}
 
   statuses@2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
@@ -6800,6 +6832,17 @@ snapshots:
       pvtsutils: 1.3.6
       tslib: 2.8.1
 
+  '@polar-sh/better-auth@1.0.1(@polar-sh/sdk@0.33.1(zod@3.25.33))(better-auth@1.2.8)':
+    dependencies:
+      '@polar-sh/sdk': 0.33.1(zod@3.25.33)
+      better-auth: 1.2.8
+      zod: 3.25.33
+
+  '@polar-sh/sdk@0.33.1(zod@3.25.33)':
+    dependencies:
+      standardwebhooks: 1.0.0
+      zod: 3.25.33
+
   '@protobuf-ts/runtime-rpc@2.11.0':
     dependencies:
       '@protobuf-ts/runtime': 2.11.0
@@ -7502,6 +7545,8 @@ snapshots:
       '@peculiar/asn1-rsa': 2.3.15
       '@peculiar/asn1-schema': 2.3.15
       '@peculiar/asn1-x509': 2.3.15
+
+  '@stablelib/base64@1.0.1': {}
 
   '@standard-schema/utils@0.3.0': {}
 
@@ -8951,6 +8996,8 @@ snapshots:
   fast-json-stable-stringify@2.1.0: {}
 
   fast-levenshtein@2.0.6: {}
+
+  fast-sha256@1.3.0: {}
 
   fastq@1.19.1:
     dependencies:
@@ -10579,6 +10626,11 @@ snapshots:
   space-separated-tokens@2.0.2: {}
 
   stable-hash@0.0.5: {}
+
+  standardwebhooks@1.0.0:
+    dependencies:
+      '@stablelib/base64': 1.0.1
+      fast-sha256: 1.3.0
 
   statuses@2.0.1: {}
 

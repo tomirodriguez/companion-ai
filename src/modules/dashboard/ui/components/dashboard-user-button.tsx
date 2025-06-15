@@ -69,7 +69,10 @@ export const DashboardUserButton = () => {
 						<DrawerDescription>{data.user.email}</DrawerDescription>
 					</DrawerHeader>
 					<DrawerFooter>
-						<Button variant="outline" onClick={() => {}}>
+						<Button
+							variant="outline"
+							onClick={() => authClient.customer.portal()}
+						>
 							<CreditCardIcon className="size-4 text-black" />
 							Billing
 						</Button>
@@ -78,25 +81,6 @@ export const DashboardUserButton = () => {
 							Logout
 						</Button>
 					</DrawerFooter>
-					{/* <DrawerLabel>
-					<div className="flex flex-col gap-1">
-						<span className="font-medium truncate">{data.user.name}</span>
-						<span className="text-sm font-normal truncate text-muted-foreground">
-							{data.user.email}
-						</span>
-					</div>
-				</DrawerLabel>
-				<DrawerSeparator />
-				<DrawerItem className="cursor-pointer flex items-center justify-between">
-					Billing <CreditCardIcon className="size-4" />
-				</DrawerItem>
-				<DrawerItem
-					className="cursor-pointer flex items-center justify-between"
-					onClick={onLogout}
-				>
-					Logout
-					<LogOutIcon className="size-4" />
-				</DrawerItem> */}
 				</DrawerContent>
 			</Drawer>
 		);
@@ -132,7 +116,10 @@ export const DashboardUserButton = () => {
 					</div>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem className="cursor-pointer flex items-center justify-between">
+				<DropdownMenuItem
+					className="cursor-pointer flex items-center justify-between"
+					onClick={() => authClient.customer.portal()}
+				>
 					Billing <CreditCardIcon className="size-4" />
 				</DropdownMenuItem>
 				<DropdownMenuItem
