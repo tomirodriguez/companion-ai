@@ -14,6 +14,7 @@ import { useTRPC } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import debounce from "lodash.debounce";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -34,6 +35,7 @@ export const AgentForm: React.FC<AgentFormProps> = ({
 	onCancel,
 }) => {
 	const [seed, setSeed] = useState(initialValues?.name ?? "");
+	const router = useRouter();
 	const trpc = useTRPC();
 	const queryClient = useQueryClient();
 
@@ -41,11 +43,18 @@ export const AgentForm: React.FC<AgentFormProps> = ({
 		trpc.agents.create.mutationOptions({
 			onSuccess: async () => {
 				await queryClient.invalidateQueries(trpc.agents.getMany.queryOptions());
+				await queryClient.invalidateQueries(
+					trpc.premium.getFreeUsage.queryOptions(),
+				);
 
 				onSuccess?.();
 			},
 			onError: (error) => {
 				toast.error(error.message);
+
+				if (error.data?.code === "FORBIDDEN") {
+					router.push("/upgrade");
+				}
 			},
 		}),
 	);
